@@ -10,9 +10,13 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.jdbc.datasource.init.DataSourceInitializer;
+import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
+import org.springframework.orm.hibernate5.HibernateExceptionTranslator;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
@@ -22,7 +26,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Configuration
 @EnableTransactionManagement
 @ComponentScan({ "com.github.ashim" })
-@PropertySource(value = { "classpath:application.properties" })
+@PropertySource(value = { "classpath:config/persistence.properties" })
 @EnableJpaRepositories(basePackages = "com.github.ashim.persistence.repo")
 public class PersistenceConfig {
 
@@ -46,8 +50,8 @@ public class PersistenceConfig {
 	@Bean
 	public DataSource dataSource() {
 		DriverManagerDataSource dataSource = new DriverManagerDataSource();
-		dataSource.setDriverClassName(environment.getRequiredProperty("jdbc.driverClassName"));
-		dataSource.setUrl(environment.getRequiredProperty("jdbc.url"));
+		dataSource.setDriverClassName(environment.getRequiredProperty("jdbc.driverClass"));
+		dataSource.setUrl(environment.getRequiredProperty("jdbc.connectionURL"));
 		dataSource.setUsername(environment.getRequiredProperty("jdbc.username"));
 		dataSource.setPassword(environment.getRequiredProperty("jdbc.password"));
 		return dataSource;
@@ -64,6 +68,32 @@ public class PersistenceConfig {
 	@Bean
 	public PersistenceExceptionTranslationPostProcessor exceptionTranslation() {
 		return new PersistenceExceptionTranslationPostProcessor();
+	}
+
+	@Bean
+	public HibernateExceptionTranslator hibernateExceptionTranslator() {
+		return new HibernateExceptionTranslator();
+	}
+
+	@Bean
+	public DataSourceInitializer dataSourceInitializer(DataSource dataSource) {
+
+		Boolean initDb = Boolean.valueOf(environment.getRequiredProperty("jdbc.initDb"));
+
+		if (initDb) {
+			ResourceDatabasePopulator databasePopulator = new ResourceDatabasePopulator();
+			databasePopulator.addScript(new ClassPathResource("dbscript/db_schema.sql"));
+			databasePopulator.addScript(new ClassPathResource("dbscript/db_insert.sql"));
+
+			DataSourceInitializer dataSourceInitializer = new DataSourceInitializer();
+			dataSourceInitializer.setDataSource(dataSource);
+
+			dataSourceInitializer.setDatabasePopulator(databasePopulator);
+
+			return dataSourceInitializer;
+		}
+
+		return null;
 	}
 
 	private Properties hibernateProperties() {

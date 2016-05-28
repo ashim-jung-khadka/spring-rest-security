@@ -7,16 +7,18 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.github.ashim.persistence.enums.UserProfileType;
+
 @Entity
-@Table(name = "USER_PROFILE")
+@Table(name = "user_profile")
 public class UserProfile {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
-	@Column(name = "TYPE", length = 15, unique = true, nullable = false)
-	private String type = UserProfileType.USER.getUserProfileType();
+	@Column(name = "profile_type", length = 15, unique = true, nullable = false)
+	private String profileType = UserProfileType.USER.getUserProfileType();
 
 	public Integer getId() {
 		return id;
@@ -26,12 +28,12 @@ public class UserProfile {
 		this.id = id;
 	}
 
-	public String getType() {
-		return type;
+	public String getProfileType() {
+		return profileType;
 	}
 
-	public void setType(String type) {
-		this.type = type;
+	public void setProfileType(String profileType) {
+		this.profileType = profileType;
 	}
 
 	@Override
@@ -39,7 +41,7 @@ public class UserProfile {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + id;
-		result = prime * result + ((type == null) ? 0 : type.hashCode());
+		result = prime * result + ((profileType == null) ? 0 : profileType.hashCode());
 		return result;
 	}
 
@@ -58,11 +60,11 @@ public class UserProfile {
 		if (id != other.id) {
 			return false;
 		}
-		if (type == null) {
-			if (other.type != null) {
+		if (profileType == null) {
+			if (other.profileType != null) {
 				return false;
 			}
-		} else if (!type.equals(other.type)) {
+		} else if (!profileType.equals(other.profileType)) {
 			return false;
 		}
 		return true;
@@ -70,7 +72,7 @@ public class UserProfile {
 
 	@Override
 	public String toString() {
-		return "UserProfile [id=" + id + ",  type=" + type + "]";
+		return "UserProfile [id=" + id + ", profileType=" + profileType + "]";
 	}
 
 }

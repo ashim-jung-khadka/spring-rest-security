@@ -22,6 +22,30 @@
 		<logback.version>1.2.17</logback.version>
 	</properties>
 
+	<profiles>
+		<profile>
+			<id>dev</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<project.name>${artifactId}</project.name>
+				
+				<db.driverClass>com.mysql.jdbc.Driver</db.driverClass>
+				<db.connectionURL>jdbc:mysql://localhost:3306/spring_rest?useSSL=false</db.connectionURL>
+				<db.username>root</db.username>
+				<db.password>root</db.password>
+				<db.initDb>true</db.initDb>
+
+				<test.db.driverClass>com.mysql.jdbc.Driver</test.db.driverClass>
+				<test.db.connectionURL>jdbc:mysql://localhost:3306/test_spring_rest?useSSL=false</test.db.connectionURL>
+				<test.db.username>root</test.db.username>
+				<test.db.password>root</test.db.password>
+				<test.db.initDb>true</test.db.initDb>
+			</properties>
+		</profile>
+	</profiles>
+
 	<dependencies>
 
 		<!-- Spring -->
@@ -157,6 +181,15 @@
 	</dependencies>
 
 	<build>
+		<finalName>spring-rest-security</finalName>
+
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
+
 		<pluginManagement>
 			<plugins>
 				<plugin>
@@ -165,6 +198,13 @@
 					<configuration>
 						<source>1.8</source>
 						<target>1.8</target>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-resources-plugin</artifactId>
+					<configuration>
+						<encoding>UTF-8</encoding>
 					</configuration>
 				</plugin>
 				<plugin>
@@ -180,7 +220,6 @@
 			</plugins>
 		</pluginManagement>
 
-		<finalName>spring-rest-security</finalName>
 	</build>
 
 </project>

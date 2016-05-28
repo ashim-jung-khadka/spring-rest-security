@@ -8,7 +8,7 @@ public interface UserProfileService {
 
 	List<UserProfile> findAll();
 	
-	UserProfile findByType(String type);
+	UserProfile findByProfileType(String type);
 	
 	UserProfile findById(int id);
 }

@@ -24,15 +24,15 @@ public class CustomUserDetailsService implements UserDetailsService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		User user = userService.findByUsername(username);
+	public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
+		User user = userService.findByUserName(userName);
 		System.out.println("User : " + user);
 		if (user == null) {
 			System.out.println("User not found");
 			throw new UsernameNotFoundException("Username not found");
 		}
-		return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),
-				user.getState().equals("Active"), true, true, true, getGrantedAuthorities(user));
+		return new org.springframework.security.core.userdetails.User(user.getUserName(), user.getPassword(),
+				user.getStatus().equals("active"), true, true, true, getGrantedAuthorities(user));
 	}
 
 	private List<GrantedAuthority> getGrantedAuthorities(User user) {
@@ -40,7 +40,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
 		for (UserProfile userProfile : user.getUserProfiles()) {
 			System.out.println("UserProfile : " + userProfile);
-			authorities.add(new SimpleGrantedAuthority("ROLE_" + userProfile.getType()));
+			authorities.add(new SimpleGrantedAuthority("ROLE_" + userProfile.getProfileType()));
 		}
 		System.out.print("authorities :" + authorities);
 		return authorities;

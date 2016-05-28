@@ -23,8 +23,8 @@ public class UserProfileServiceImpl implements UserProfileService {
 	}
 
 	@Override
-	public UserProfile findByType(String type) {
-		return userProfileRepository.findByType(type);
+	public UserProfile findByProfileType(String profileType) {
+		return userProfileRepository.findByProfileType(profileType);
 	}
 
 	@Override

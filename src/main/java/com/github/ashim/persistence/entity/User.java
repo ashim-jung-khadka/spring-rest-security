@@ -16,8 +16,10 @@ import javax.persistence.Table;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
+import com.github.ashim.persistence.enums.UserStatus;
+
 @Entity
-@Table(name = "APP_USER")
+@Table(name = "app_user")
 public class User {
 
 	@Id
@@ -25,32 +27,32 @@ public class User {
 	private Integer id;
 
 	@NotEmpty
-	@Column(name = "USERNAME", unique = true, nullable = false)
-	private String username;
+	@Column(name = "user_name", unique = true, nullable = false)
+	private String userName;
 
 	@NotEmpty
-	@Column(name = "PASSWORD", nullable = false)
+	@Column(name = "password", nullable = false)
 	private String password;
 
 	@NotEmpty
-	@Column(name = "FIRST_NAME", nullable = false)
+	@Column(name = "first_name", nullable = false)
 	private String firstName;
 
 	@NotEmpty
-	@Column(name = "LAST_NAME", nullable = false)
+	@Column(name = "last_name", nullable = false)
 	private String lastName;
 
 	@NotEmpty
-	@Column(name = "EMAIL", nullable = false)
+	@Column(name = "email", nullable = false)
 	private String email;
 
 	@NotEmpty
-	@Column(name = "STATE", nullable = false)
-	private String state = State.ACTIVE.getState();
+	@Column(name = "status", nullable = false)
+	private String status = UserStatus.ACTIVE.getState();
 
 	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "APP_USER_USER_PROFILE", joinColumns = { @JoinColumn(name = "USER_ID") }, inverseJoinColumns = {
-			@JoinColumn(name = "USER_PROFILE_ID") })
+	@JoinTable(name = "app_user_user_profile", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = {
+			@JoinColumn(name = "user_profile_id") })
 	private Set<UserProfile> userProfiles = new HashSet<UserProfile>();
 
 	public Integer getId() {
@@ -61,12 +63,12 @@ public class User {
 		this.id = id;
 	}
 
-	public String getUsername() {
-		return username;
+	public String getUserName() {
+		return userName;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
 	public String getPassword() {
@@ -101,12 +103,12 @@ public class User {
 		this.email = email;
 	}
 
-	public String getState() {
-		return state;
+	public String getStatus() {
+		return status;
 	}
 
-	public void setState(String state) {
-		this.state = state;
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 	public Set<UserProfile> getUserProfiles() {
@@ -122,7 +124,7 @@ public class User {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + id;
-		result = prime * result + ((username == null) ? 0 : username.hashCode());
+		result = prime * result + ((userName == null) ? 0 : userName.hashCode());
 		return result;
 	}
 
@@ -141,11 +143,11 @@ public class User {
 		if (id != other.id) {
 			return false;
 		}
-		if (username == null) {
-			if (other.username != null) {
+		if (userName == null) {
+			if (other.userName != null) {
 				return false;
 			}
-		} else if (!username.equals(other.username)) {
+		} else if (!userName.equals(other.userName)) {
 			return false;
 		}
 		return true;
@@ -153,9 +155,9 @@ public class User {
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", username=" + username + ", password=" + password + ", firstName=" + firstName
-				+ ", lastName=" + lastName + ", email=" + email + ", state=" + state + ", userProfiles=" + userProfiles
-				+ "]";
+		return "User [id=" + id + ", userName=" + userName + ", password=" + password + ", firstName=" + firstName
+				+ ", lastName=" + lastName + ", email=" + email + ", status=" + status + ", userProfiles="
+				+ userProfiles + "]";
 	}
 
 }

@@ -8,6 +8,6 @@ public interface UserProfileRepository extends JpaRepository<UserProfile, Intege
 
 	UserProfile findById(Integer id);
 
-	UserProfile findByType(String type);
+	UserProfile findByProfileType(String profileType);
 
 }

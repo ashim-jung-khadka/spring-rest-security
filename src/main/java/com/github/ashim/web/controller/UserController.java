@@ -3,6 +3,7 @@ package com.github.ashim.web.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,9 +22,12 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 
+	@Value("${project.name}")
+	String projectName;
+
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<User> getUsers() {
-		LOGGER.info("debug mode");
+		LOGGER.info("debug mode - " + projectName);
 
 		return new ResponseEntity<>(userService.findById(1), HttpStatus.OK);
 	}
