@@ -23,6 +23,8 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import liquibase.integration.spring.SpringLiquibase;
+
 @Configuration
 @EnableTransactionManagement
 @ComponentScan({ "com.github.ashim" })
@@ -94,6 +96,14 @@ public class PersistenceConfig {
 		}
 
 		return null;
+	}
+
+	@Bean
+	public SpringLiquibase liquibase() {
+		SpringLiquibase liquibase = new SpringLiquibase();
+		liquibase.setChangeLog("classpath:db/migration/changeLog.xml");
+		liquibase.setDataSource(dataSource());
+		return liquibase;
 	}
 
 	private Properties hibernateProperties() {

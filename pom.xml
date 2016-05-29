@@ -24,18 +24,18 @@
 
 	<profiles>
 		<profile>
-			<id>dev</id>
+			<id>develop</id>
 			<activation>
 				<activeByDefault>true</activeByDefault>
 			</activation>
 			<properties>
 				<project.name>${artifactId}</project.name>
-				
+
 				<db.driverClass>com.mysql.jdbc.Driver</db.driverClass>
 				<db.connectionURL>jdbc:mysql://localhost:3306/spring_rest?useSSL=false</db.connectionURL>
 				<db.username>root</db.username>
 				<db.password>root</db.password>
-				<db.initDb>true</db.initDb>
+				<db.initDb>false</db.initDb>
 
 				<test.db.driverClass>com.mysql.jdbc.Driver</test.db.driverClass>
 				<test.db.connectionURL>jdbc:mysql://localhost:3306/test_spring_rest?useSSL=false</test.db.connectionURL>
@@ -178,6 +178,21 @@
 			<version>${slf4j.version}</version>
 		</dependency>
 
+		<!-- Changelog for Db Schema -->
+		<dependency>
+			<groupId>org.liquibase</groupId>
+			<artifactId>liquibase-core</artifactId>
+			<version>3.5.1</version>
+		</dependency>
+
+		<!-- the core package provides just logging through SysErr, we need this 
+			logger implementation -->
+		<dependency>
+			<groupId>com.mattbertolini</groupId>
+			<artifactId>liquibase-slf4j</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>
@@ -213,11 +228,49 @@
 					<version>2.4</version>
 					<configuration>
 						<warSourceDirectory>src/main/webapp</warSourceDirectory>
-						<warName>spring-rest-security</warName>
+						<warName>${artifactId}</warName>
 						<failOnMissingWebXml>false</failOnMissingWebXml>
 					</configuration>
 				</plugin>
+
+				<plugin>
+					<groupId>org.liquibase</groupId>
+					<artifactId>liquibase-maven-plugin</artifactId>
+					<version>3.4.1</version>
+					<configuration>
+						<changeLogFile>src/main/resources/db/migration/changeLog.xml</changeLogFile>
+						<diffChangeLogFile>src/main/resources/db/migration/diff-changeLog.xml</diffChangeLogFile>
+						<outputChangeLogFile>src/main/resources/db/migration/output-changeLog.xml</outputChangeLogFile>
+						
+						<driver>${db.driverClass}</driver>
+						<url>${db.connectionURL}</url>
+						<username>${db.username}</username>
+						<password>${db.password}</password>
+						
+						<referenceUrl>hibernate:spring:com.github.ashim.persistence.entity?dialect=org.hibernate.dialect.MySQLDialect</referenceUrl>
+						<verbose>true</verbose>
+						<logging>debug</logging>
+					</configuration>
+					<dependencies>
+						<dependency>
+							<groupId>org.liquibase.ext</groupId>
+							<artifactId>liquibase-hibernate4</artifactId>
+							<version>3.5</version>
+						</dependency>
+						<dependency>
+							<groupId>org.springframework</groupId>
+							<artifactId>spring-beans</artifactId>
+							<version>4.1.7.RELEASE</version>
+						</dependency>
+						<dependency>
+							<groupId>org.springframework.data</groupId>
+							<artifactId>spring-data-jpa</artifactId>
+							<version>1.7.3.RELEASE</version>
+						</dependency>
+					</dependencies>
+				</plugin>
 			</plugins>
+
 		</pluginManagement>
 
 	</build>
