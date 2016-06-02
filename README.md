@@ -4,43 +4,47 @@
 
 ### Use the REST Service
 
-#### Authentication
+#### API Authentication
 ```
 curl -v -X POST -d ashim:ashim http://localhost:8080/spring-rest-security/login
 ```
 #### Call API
 ```
-curl http://localhost:8080/spring-rest-security/users -H "Cookie:JSESSIONID=0234A1D6C55AD3DBF516BF7BD622388F"
+curl http://localhost:8080/spring-rest-security/users -H "Cookie:JSESSIONID=0234A1D6C"
 ```
 ### Maven Command
-#### Generate War File
+#### Generate War File:
 ```
-	mvn clean install
+mvn clean install
 ```
-#### Integration Test
+#### Unit Test:
 ```
-	mvn clean verify -P integration-test
+mvn clean test -P unit-test
+```
+#### Integration Test:
+```
+mvn clean verify -P integration-test
 ```
 ### Liquibase Command
 
 #### Apply all database changes:
 ```
-	mvn liquibase:update
+mvn liquibase:update
 ```
-#### Generate SQL script for applying all database changes
+#### Generate SQL script for applying all database changes:
 ```
-	mvn liquibase:updateSQL
+mvn liquibase:updateSQL
 ```
-#### Generate Change Log From Database
+#### Generate change log from database:
 ```
-	mvn liquibase:generateChangeLog
+mvn liquibase:generateChangeLog
 ```
-#### Generate Log from JPA Entity
+#### Generate log from JPA Entity:
 ```
-	mvn liquibase:diff
+mvn liquibase:diff
 ```
-#### Rollback
+#### Rollback:
 ```
-	mvn -Dliquibase.rollbackCount=1000 liquibase:rollback
-	mvn -Dliquibase.rollbackCount=1000 liquibase:rollback -P integration-test
+mvn -Dliquibase.rollbackCount=1000 liquibase:rollback
+mvn -Dliquibase.rollbackCount=1000 liquibase:rollback -P integration-test
 ```
