@@ -1,0 +1,8 @@
+<dataset>
+	<app_user id="1" user_name="ashim"
+		password="$2a$10$0rrM2oy2RMKoJ4T5PpaZruCfN3sBab8sS6TEKbwXRawE0ml.DJ.CS"
+		first_name="Ashim" last_name="Khadka" email="ashim@gmail.com" status="active" />
+	<app_user id="2" user_name="ashish"
+		password="$2a$10$0rrM2oy2RMKoJ4T5PpaZruCfN3sBab8sS6TEKbwXRawE0ml.DJ.CS"
+		first_name="Ashish" last_name="Khadka" email="ashish@gmail.com" status="active" />
+</dataset>

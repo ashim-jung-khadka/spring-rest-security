@@ -1,4 +1,4 @@
-package com.github.ashim.persistence.config;
+package com.github.ashim.persistence.common.config;
 
 import java.util.Properties;
 
@@ -10,12 +10,9 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import org.springframework.jdbc.datasource.init.DataSourceInitializer;
-import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.orm.hibernate5.HibernateExceptionTranslator;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -27,7 +24,7 @@ import liquibase.integration.spring.SpringLiquibase;
 
 @Configuration
 @EnableTransactionManagement
-@ComponentScan({ "com.github.ashim" })
+@ComponentScan({ "com.github.ashim.persistence" })
 @PropertySource(value = { "classpath:config/persistence.properties" })
 @EnableJpaRepositories(basePackages = "com.github.ashim.persistence.repo")
 public class PersistenceConfig {
@@ -78,30 +75,11 @@ public class PersistenceConfig {
 	}
 
 	@Bean
-	public DataSourceInitializer dataSourceInitializer(DataSource dataSource) {
-
-		Boolean initDb = Boolean.valueOf(environment.getRequiredProperty("jdbc.initDb"));
-
-		if (initDb) {
-			ResourceDatabasePopulator databasePopulator = new ResourceDatabasePopulator();
-			databasePopulator.addScript(new ClassPathResource("dbscript/db_schema.sql"));
-			databasePopulator.addScript(new ClassPathResource("dbscript/db_insert.sql"));
-
-			DataSourceInitializer dataSourceInitializer = new DataSourceInitializer();
-			dataSourceInitializer.setDataSource(dataSource);
-
-			dataSourceInitializer.setDatabasePopulator(databasePopulator);
-
-			return dataSourceInitializer;
-		}
-
-		return null;
-	}
-
-	@Bean
 	public SpringLiquibase liquibase() {
+		String changeLog = environment.getRequiredProperty("changeLog");
 		SpringLiquibase liquibase = new SpringLiquibase();
-		liquibase.setChangeLog("classpath:db/migration/changeLog.xml");
+
+		liquibase.setChangeLog("classpath:db/migration/" + changeLog);
 		liquibase.setDataSource(dataSource());
 		return liquibase;
 	}

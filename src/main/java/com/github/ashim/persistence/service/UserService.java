@@ -14,4 +14,6 @@ public interface UserService {
 
 	public List<User> findAllBySpec(String search);
 
+	public List<User> search(String searchTerm);
+
 }

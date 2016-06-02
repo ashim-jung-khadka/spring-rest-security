@@ -1,4 +1,4 @@
-package com.github.ashim.persistence.enums;
+package com.github.ashim.persistence.common.enums;
 
 public enum UserProfileType {
 

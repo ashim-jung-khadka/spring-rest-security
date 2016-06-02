@@ -1,4 +1,4 @@
-package com.github.ashim.persistence.util;
+package com.github.ashim.persistence.common.spec;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;

@@ -1,4 +1,4 @@
-package com.github.ashim.persistence.util;
+package com.github.ashim.persistence.common.spec;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.domain.Specifications;
 
-import com.github.ashim.persistence.enums.SearchOperation;
+import com.github.ashim.persistence.common.enums.SearchOperation;
 import com.google.common.base.Joiner;
 
 public class SpecBuilder<T> {

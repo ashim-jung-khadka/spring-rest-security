@@ -4,14 +4,14 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.github.ashim.persistence.common.spec.SpecBuilder;
+import com.github.ashim.persistence.common.utility.ServiceHelper;
 import com.github.ashim.persistence.entity.User;
 import com.github.ashim.persistence.repo.UserRepository;
 import com.github.ashim.persistence.service.UserService;
-import com.github.ashim.persistence.util.SpecBuilder;
 
 @Service("userService")
 @Transactional
@@ -20,12 +20,12 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private UserRepository userRepository;
 
-	@Autowired
-	private PasswordEncoder passwordEncoder;
-
 	@Override
 	public void save(User user) {
-		user.setPassword(passwordEncoder.encode(user.getPassword()));
+
+		String password = ServiceHelper.passwordEncoder(user.getPassword());
+		user.setPassword(password);
+
 		userRepository.save(user);
 	}
 
@@ -45,6 +45,11 @@ public class UserServiceImpl implements UserService {
 		Specification<User> spec = SpecBuilder.build(search);
 		return userRepository.findAll(spec);
 
+	}
+
+	@Override
+	public List<User> search(String searchTerm) {
+		return userRepository.search(searchTerm);
 	}
 
 }

@@ -1,6 +1,6 @@
-package com.github.ashim.persistence.util;
+package com.github.ashim.persistence.common.spec;
 
-import com.github.ashim.persistence.enums.SearchOperation;
+import com.github.ashim.persistence.common.enums.SearchOperation;
 
 public class SearchCriteria {
 

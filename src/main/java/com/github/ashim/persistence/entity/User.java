@@ -16,7 +16,7 @@ import javax.persistence.Table;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
-import com.github.ashim.persistence.enums.UserStatus;
+import com.github.ashim.persistence.common.enums.UserStatus;
 
 @Entity
 @Table(name = "app_user")

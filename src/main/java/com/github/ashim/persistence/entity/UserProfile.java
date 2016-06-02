@@ -7,7 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import com.github.ashim.persistence.enums.UserProfileType;
+import com.github.ashim.persistence.common.enums.UserProfileType;
 
 @Entity
 @Table(name = "user_profile")
