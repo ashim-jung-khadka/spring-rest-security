@@ -5,4 +5,38 @@
 	   http://www.liquibase.org/xml/ns/dbchangelog 
 	   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
 
+    <changeSet author="ashim" id="tbl_product">
+        <createTable tableName="product">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints primaryKey="true" primaryKeyName="productPK"/>
+            </column>
+            <column name="description" type="VARCHAR(200)"/>
+            <column name="product_code" type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="product_name" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        
+        <rollback>
+        	<dropTable tableName="product" />
+        </rollback>
+    </changeSet>
+    <changeSet author="ashim" id="product_code_unique_constraint">
+        <addUniqueConstraint columnNames="product_code" constraintName="UC_PRODUCT_PRODUCT_CODE" tableName="product"/>
+        
+        <rollback>
+        	<dropUniqueConstraint tableName="product" constraintName="UC_PRODUCT_PRODUCT_CODE" />
+        </rollback>
+    </changeSet>
+    <changeSet author="ashim" id="product_name_unique_constraint">
+        <addUniqueConstraint columnNames="product_name" constraintName="UC_PRODUCT_PRODUCT_NAME" tableName="product"/>
+        
+        <rollback>
+        	<dropUniqueConstraint tableName="product" constraintName="UC_PRODUCT_PRODUCT_NAME" />
+        </rollback>
+    </changeSet>
+
+
 </databaseChangeLog>

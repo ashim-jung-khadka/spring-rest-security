@@ -2,13 +2,10 @@ package com.github.ashim.test.util;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.github.ashim.persistence.common.utility.ServiceHelper;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-public class ServiceTest extends TestModel {
+public class ServiceTest {
 
 	@Test
 	public void testPasswordEncoder() {

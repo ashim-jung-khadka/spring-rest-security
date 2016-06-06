@@ -11,11 +11,12 @@ import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.stereotype.Component;
 
 @Component
-public class CustomAccessDeniedHandler implements AccessDeniedHandler {
+public class RestAccessDeniedHandler implements AccessDeniedHandler {
 
 	@Override
 	public void handle(final HttpServletRequest request, final HttpServletResponse response,
 			final AccessDeniedException ex) throws IOException, ServletException {
+
 		response.getOutputStream().print("Custom Access Denied Handler");
 		response.setStatus(403);
 

@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -13,28 +14,26 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
+import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 
-import com.github.ashim.spring.security.CustomAccessDeniedHandler;
+import com.github.ashim.spring.security.RestAccessDeniedHandler;
 import com.github.ashim.spring.security.RestAuthenticationEntryPoint;
-import com.github.ashim.spring.security.SuccessHandler;
+import com.github.ashim.spring.security.RestAuthenticationFailureHandler;
+import com.github.ashim.spring.security.RestLogoutSuccessHandler;
+import com.github.ashim.spring.security.RestUrlSuccessHandler;
 
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	@Qualifier("customUserDetailsService")
 	private UserDetailsService userDetailsService;
-
-	@Autowired
-	private CustomAccessDeniedHandler accessDeniedHandler;
-
-	@Autowired
-	private RestAuthenticationEntryPoint restAuthenticationEntryPoint;
-
-	@Autowired
-	private SuccessHandler authenticationSuccessHandler;
 
 	@Autowired
 	public void configureGlobalSecurity(AuthenticationManagerBuilder auth) throws Exception {
@@ -66,16 +65,16 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 		 http
 	        .csrf().disable()
-	        .exceptionHandling().accessDeniedHandler(accessDeniedHandler)
-	        .authenticationEntryPoint(restAuthenticationEntryPoint)
+	        .exceptionHandling().accessDeniedHandler(accessDeniedHandler())
+	        .authenticationEntryPoint(authenticationEntryPoint())
 	        .and()
 	        .authorizeRequests()
 			.antMatchers("/").permitAll()
 			.antMatchers("/users/**").access("hasRole('ADMIN')")
 			.and()
 	        .formLogin()
-	        .successHandler(authenticationSuccessHandler)
-	        .failureHandler(new SimpleUrlAuthenticationFailureHandler())
+	        .successHandler(authenticationSuccessHandler())
+	        .failureHandler(authenticationFailureHandler())
 	        .and()
 	        .logout();
 
@@ -96,12 +95,27 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	}
 
 	@Bean
-	public SuccessHandler mySuccessHandler() {
-		return new SuccessHandler();
+	public AuthenticationEntryPoint authenticationEntryPoint() {
+		return new RestAuthenticationEntryPoint();
 	}
 
 	@Bean
-	public SimpleUrlAuthenticationFailureHandler myFailureHandler() {
-		return new SimpleUrlAuthenticationFailureHandler();
+	public AccessDeniedHandler accessDeniedHandler() {
+		return new RestAccessDeniedHandler();
+	}
+
+	@Bean
+	public SimpleUrlAuthenticationSuccessHandler authenticationSuccessHandler() {
+		return new RestUrlSuccessHandler();
+	}
+
+	@Bean
+	public AuthenticationFailureHandler authenticationFailureHandler() {
+		return new RestAuthenticationFailureHandler();
+	}
+
+	@Bean
+	public LogoutSuccessHandler restLogoutSuccessHandler() {
+		return new RestLogoutSuccessHandler();
 	}
 }
