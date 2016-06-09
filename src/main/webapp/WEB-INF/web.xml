@@ -45,6 +45,17 @@
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 
+    <!-- Metric filter -->
+    <filter>
+        <filter-name>metricFilter</filter-name>
+        <filter-class>com.github.ashim.web.metric.MetricFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>metricFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
 	<filter>
 		<filter-name>cors</filter-name>
 		<filter-class>com.github.ashim.spring.config.CorsFilter</filter-class>

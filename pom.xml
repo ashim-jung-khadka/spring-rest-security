@@ -46,17 +46,6 @@
 			<properties>
 				<project.name>${project.artifactId}</project.name>
 
-				<db.driverClass>com.mysql.jdbc.Driver</db.driverClass>
-				<db.connectionURL>jdbc:mysql://localhost:3306/test_spring_rest?useSSL=false</db.connectionURL>
-				<db.username>root</db.username>
-				<db.password>root</db.password>
-
-				<liquibase.changeLog>test-master.xml</liquibase.changeLog>
-
-				<hibernate.dialect>org.hibernate.dialect.MySQLDialect</hibernate.dialect>
-				<hibernate.show_sql>true</hibernate.show_sql>
-				<hibernate.format_sql>true</hibernate.format_sql>
-
 				<skip.unit.tests>false</skip.unit.tests>
 				<skip.integration.tests>true</skip.integration.tests>
 			</properties>
@@ -474,68 +463,22 @@
 			<scope>test</scope>
 		</dependency>
 
-		<!-- <dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-test-mvc</artifactId>
-			<version>1.0.0.M2</version>
-			<scope>test</scope>
-			<exclusions>
-				<exclusion>
-					<artifactId>spring-context</artifactId>
-					<groupId>org.springframework</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>spring-webmvc</artifactId>
-					<groupId>org.springframework</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>spring-test</artifactId>
-					<groupId>org.springframework</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>hamcrest-all</artifactId>
-					<groupId>org.hamcrest</groupId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-
-		<dependency>
-			<groupId>org.assertj</groupId>
-			<artifactId>assertj-core</artifactId>
-			<version>3.4.1</version>
-			<scope>test</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>org.powermock</groupId>
-			<artifactId>powermock-core</artifactId>
-			<version>1.6.5</version>
-			<scope>test</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>org.powermock</groupId>
-			<artifactId>powermock-module-junit4</artifactId>
-			<version>1.6.5</version>
-			<scope>test</scope>
-			<exclusions>
-				<exclusion>
-					<groupId>junit</groupId>
-					<artifactId>junit</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.objenesis</groupId>
-					<artifactId>objenesis</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-
-		<dependency>
-			<groupId>org.powermock</groupId>
-			<artifactId>powermock-api-mockito</artifactId>
-			<version>1.6.5</version>
-			<scope>test</scope>
-		</dependency> -->
+		<!-- <dependency> <groupId>org.springframework</groupId> <artifactId>spring-test-mvc</artifactId> 
+			<version>1.0.0.M2</version> <scope>test</scope> <exclusions> <exclusion> 
+			<artifactId>spring-context</artifactId> <groupId>org.springframework</groupId> 
+			</exclusion> <exclusion> <artifactId>spring-webmvc</artifactId> <groupId>org.springframework</groupId> 
+			</exclusion> <exclusion> <artifactId>spring-test</artifactId> <groupId>org.springframework</groupId> 
+			</exclusion> <exclusion> <artifactId>hamcrest-all</artifactId> <groupId>org.hamcrest</groupId> 
+			</exclusion> </exclusions> </dependency> <dependency> <groupId>org.assertj</groupId> 
+			<artifactId>assertj-core</artifactId> <version>3.4.1</version> <scope>test</scope> 
+			</dependency> <dependency> <groupId>org.powermock</groupId> <artifactId>powermock-core</artifactId> 
+			<version>1.6.5</version> <scope>test</scope> </dependency> <dependency> <groupId>org.powermock</groupId> 
+			<artifactId>powermock-module-junit4</artifactId> <version>1.6.5</version> 
+			<scope>test</scope> <exclusions> <exclusion> <groupId>junit</groupId> <artifactId>junit</artifactId> 
+			</exclusion> <exclusion> <groupId>org.objenesis</groupId> <artifactId>objenesis</artifactId> 
+			</exclusion> </exclusions> </dependency> <dependency> <groupId>org.powermock</groupId> 
+			<artifactId>powermock-api-mockito</artifactId> <version>1.6.5</version> <scope>test</scope> 
+			</dependency> -->
 
 	</dependencies>
 
