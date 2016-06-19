@@ -24,4 +24,6 @@ public interface RegistrationService {
 
 	public void changeUserPassword(User user, String password);
 
+	public boolean checkIfValidOldPassword(User user, String password);
+
 }

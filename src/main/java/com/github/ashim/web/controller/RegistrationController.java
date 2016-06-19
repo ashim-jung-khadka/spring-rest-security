@@ -1,6 +1,7 @@
 package com.github.ashim.web.controller;
 
 import java.util.Date;
+import java.util.Locale;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -137,13 +138,27 @@ public class RegistrationController {
 	@RequestMapping(value = "/savePassword", method = RequestMethod.POST)
 	public GenericResponse savePassword(@RequestParam("password") final String password) {
 
+		// TODO : Change it to SpringContextUtil
 		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
 		// TODO : Validate password
-
 		registrationService.changeUserPassword(user, password);
 
 		return new GenericResponse("Password reset successfully");
+	}
+
+	@RequestMapping(value = "/updatePassword", method = RequestMethod.POST)
+	public GenericResponse changeUserPassword(final Locale locale, @RequestParam("password") final String password,
+			@RequestParam("oldPassword") final String oldPassword) {
+		System.out.println(locale);
+		final User user = registrationService
+				.findUserByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+		if (!registrationService.checkIfValidOldPassword(user, oldPassword)) {
+			// TODO : Handle Invalid Password
+			// throw new InvalidOldPasswordException();
+		}
+		registrationService.changeUserPassword(user, password);
+		return new GenericResponse("Password updated successfully");
 	}
 
 	private final SimpleMailMessage constructResetTokenEmail(final String contextPath, final String token,

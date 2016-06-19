@@ -103,11 +103,15 @@ public class RegistrationServiceImpl implements RegistrationService {
 
 	@Override
 	public void changeUserPassword(User user, String password) {
-
 		password = ServiceHelper.passwordEncoder(password);
-
 		user.setPassword(password);
 		userRepository.save(user);
+	}
+
+	@Override
+	public boolean checkIfValidOldPassword(final User user, final String oldPassword) {
+		String password = ServiceHelper.passwordEncoder(oldPassword);
+		return user.getPassword().equals(password);
 	}
 
 }
