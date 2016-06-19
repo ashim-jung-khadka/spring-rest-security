@@ -50,6 +50,9 @@ public class User {
 	@Column(name = "status", nullable = false)
 	private String status = UserStatus.ACTIVE.getState();
 
+	@Column(name = "enabled")
+	private Boolean enabled = false;
+
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "app_user_user_profile", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = {
 			@JoinColumn(name = "user_profile_id") })
@@ -119,11 +122,19 @@ public class User {
 		this.userProfiles = userProfiles;
 	}
 
+	public Boolean isEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(Boolean enabled) {
+		this.enabled = enabled;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + id;
+		result = prime * result + ((id == null) ? 0 : id);
 		result = prime * result + ((userName == null) ? 0 : userName.hashCode());
 		return result;
 	}

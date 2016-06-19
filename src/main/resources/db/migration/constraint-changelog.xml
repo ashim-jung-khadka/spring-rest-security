@@ -1,0 +1,43 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext
+	   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd 
+	   http://www.liquibase.org/xml/ns/dbchangelog 
+	   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+  
+    <!-- 1 -->
+    <changeSet author="ashim" id="product_unique_product_code">
+        <addUniqueConstraint columnNames="product_code" constraintName="UC_PRODUCT_PRODUCT_CODE" tableName="product"/>
+        
+        <rollback>
+        	<dropUniqueConstraint tableName="product" constraintName="UC_PRODUCT_PRODUCT_CODE" />
+        </rollback>
+    </changeSet>
+    
+    <changeSet author="ashim" id="product_unique_product_name">
+        <addUniqueConstraint columnNames="product_name" constraintName="UC_PRODUCT_PRODUCT_NAME" tableName="product"/>
+        
+        <rollback>
+        	<dropUniqueConstraint tableName="product" constraintName="UC_PRODUCT_PRODUCT_NAME" />
+        </rollback>
+    </changeSet>
+
+    <changeSet author="ashim" id="verification_token_foreign_user_id">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="verification_token" constraintName="FK_VERIFICATION_TOKEN_USER" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="app_user"/>
+        
+        <rollback>
+        	<dropForeignKeyConstraint baseTableName="verification_token" constraintName="FK_VERIFICATION_TOKEN_USER" />
+        </rollback>
+    </changeSet>
+    
+    <changeSet author="ashim" id="password_reset_token_foreign_user_id">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="password_reset_token" constraintName="FK_PASSWORD_RESET_TOKEN_USER" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="app_user"/>
+        
+        <rollback>
+        	<dropForeignKeyConstraint baseTableName="password_reset_token" constraintName="FK_PASSWORD_RESET_TOKEN_USER" />
+        </rollback>
+    </changeSet>
+    
+    <!-- 2 -->
+    
+</databaseChangeLog>

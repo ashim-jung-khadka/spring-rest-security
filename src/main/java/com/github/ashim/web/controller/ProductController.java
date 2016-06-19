@@ -20,8 +20,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.github.ashim.persistence.entity.Product;
-import com.github.ashim.persistence.entity.ValidationDto;
 import com.github.ashim.persistence.service.ProductService;
+import com.github.ashim.web.dto.ValidationDto;
 
 @RestController
 @RequestMapping("/products")

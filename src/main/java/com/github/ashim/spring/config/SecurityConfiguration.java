@@ -1,7 +1,6 @@
 package com.github.ashim.spring.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -32,7 +31,6 @@ import com.github.ashim.spring.security.RestUrlSuccessHandler;
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Autowired
-	@Qualifier("customUserDetailsService")
 	private UserDetailsService userDetailsService;
 
 	@Autowired
@@ -71,6 +69,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	        .authorizeRequests()
 			.antMatchers("/").permitAll()
 			.antMatchers("/users/**").access("hasRole('ADMIN')")
+			.antMatchers("/registration/savePassword").access("hasRole('ADMIN')")
 			.and()
 	        .formLogin()
 	        .successHandler(authenticationSuccessHandler())

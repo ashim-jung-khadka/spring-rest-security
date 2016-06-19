@@ -1,4 +1,4 @@
-package com.github.ashim.persistence.entity;
+package com.github.ashim.web.dto;
 
 import java.util.Date;
 

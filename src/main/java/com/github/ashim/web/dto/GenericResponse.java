@@ -5,13 +5,19 @@ import java.util.List;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+@JsonInclude(Include.NON_EMPTY)
 public class GenericResponse {
 
 	private String message;
 	private String error;
+
+	public GenericResponse() {
+	}
 
 	public GenericResponse(final String message) {
 		super();

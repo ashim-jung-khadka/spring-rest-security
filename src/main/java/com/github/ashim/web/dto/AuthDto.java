@@ -1,32 +1,33 @@
-package com.github.ashim.persistence.entity;
+package com.github.ashim.web.dto;
 
-import org.hibernate.validator.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
-import com.github.ashim.persistence.common.validation.annotation.Alphabet;
 import com.github.ashim.persistence.common.validation.annotation.Password;
 import com.github.ashim.persistence.common.validation.annotation.PasswordMatches;
 import com.github.ashim.persistence.common.validation.annotation.ValidEmail;
 
 @PasswordMatches
-public class UserDto {
+public class AuthDto {
 
-	@Alphabet
-	@NotBlank
+	@NotNull
+	@Size(min = 1)
 	private String firstName;
 
-	@Alphabet
-	@NotBlank
+	@NotNull
+	@Size(min = 1)
 	private String lastName;
 
 	@Password
-	@NotBlank
 	private String password;
 
-	@NotBlank
+	@NotNull
+	@Size(min = 1)
 	private String matchingPassword;
 
 	@ValidEmail
-	@NotBlank
+	@NotNull
+	@Size(min = 1)
 	private String email;
 
 	public String getFirstName() {
@@ -71,8 +72,8 @@ public class UserDto {
 
 	@Override
 	public String toString() {
-		return "UserDto [firstName=" + firstName + ", lastName=" + lastName + ", password=" + password
-				+ ", matchingPassword=" + matchingPassword + ", email=" + email + "]";
+		return "{\"firstName\": \"" + firstName + "\", \"lastName\": \"" + lastName + "\", \"password\": \"" + password
+				+ "\", \"matchingPassword\": \"" + matchingPassword + "\", \"email\": \"" + email + "\"}";
 	}
 
 }

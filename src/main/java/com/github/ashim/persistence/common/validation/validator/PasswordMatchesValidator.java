@@ -7,7 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.github.ashim.persistence.common.validation.annotation.PasswordMatches;
-import com.github.ashim.persistence.entity.UserDto;
+import com.github.ashim.web.dto.AuthDto;
 
 public class PasswordMatchesValidator implements ConstraintValidator<PasswordMatches, Object> {
 
@@ -26,7 +26,7 @@ public class PasswordMatchesValidator implements ConstraintValidator<PasswordMat
 
 		LOGGER.debug("PasswordMatchesValidator ::: user : {}", obj);
 
-		final UserDto user = (UserDto) obj;
+		final AuthDto user = (AuthDto) obj;
 		return user.getPassword().equals(user.getMatchingPassword());
 	}
 

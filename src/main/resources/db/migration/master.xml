@@ -8,7 +8,7 @@
 	<include file="db/migration/sql/schema-changelog.sql" />
 
 	<include file="db/migration/diff-changelog.xml" />
-	
 	<include file="db/migration/sql/insert-changelog.sql" />
+	<include file="db/migration/constraint-changelog.xml" />
 
 </databaseChangeLog>

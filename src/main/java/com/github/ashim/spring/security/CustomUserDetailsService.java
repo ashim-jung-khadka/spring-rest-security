@@ -16,7 +16,7 @@ import com.github.ashim.persistence.entity.User;
 import com.github.ashim.persistence.entity.UserProfile;
 import com.github.ashim.persistence.service.UserService;
 
-@Service("customUserDetailsService")
+@Service("userDetailsService")
 public class CustomUserDetailsService implements UserDetailsService {
 
 	@Autowired
@@ -25,24 +25,32 @@ public class CustomUserDetailsService implements UserDetailsService {
 	@Override
 	@Transactional(readOnly = true)
 	public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
+
 		User user = userService.findByUserName(userName);
-		System.out.println("User : " + user);
+		// System.out.println("User : " + user);
+
 		if (user == null) {
-			System.out.println("User not found");
+			// System.out.println("User not found");
 			throw new UsernameNotFoundException("Username not found");
 		}
+
+		// TODO : Change user name into email
 		return new org.springframework.security.core.userdetails.User(user.getUserName(), user.getPassword(),
-				user.getStatus().equals("active"), true, true, true, getGrantedAuthorities(user));
+				user.isEnabled(), true, true, true, getGrantedAuthorities(user));
 	}
 
 	private List<GrantedAuthority> getGrantedAuthorities(User user) {
+
 		List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
 
 		for (UserProfile userProfile : user.getUserProfiles()) {
-			System.out.println("UserProfile : " + userProfile);
+
+			// System.out.println("UserProfile : " + userProfile);
 			authorities.add(new SimpleGrantedAuthority("ROLE_" + userProfile.getProfileType()));
+
 		}
-		System.out.print("authorities :" + authorities);
+
+		// System.out.print("authorities :" + authorities);
 		return authorities;
 	}
 

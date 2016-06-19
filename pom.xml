@@ -239,6 +239,26 @@
 		<!-- Spring -->
 		<dependency>
 			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<version>${springframework.version}</version>
+		</dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context-support</artifactId>
+			<version>${springframework.version}</version>
+        </dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-beans</artifactId>
+			<version>${springframework.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>${springframework.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
 			<version>${springframework.version}</version>
 		</dependency>
@@ -463,6 +483,12 @@
 			<scope>test</scope>
 		</dependency>
 
+		<dependency>
+			<groupId>javax.mail</groupId>
+			<artifactId>mail</artifactId>
+			<version>${javax.mail.version}</version>
+		</dependency>
+
 		<!-- <dependency> <groupId>org.springframework</groupId> <artifactId>spring-test-mvc</artifactId> 
 			<version>1.0.0.M2</version> <scope>test</scope> <exclusions> <exclusion> 
 			<artifactId>spring-context</artifactId> <groupId>org.springframework</groupId> 
@@ -495,6 +521,7 @@
 		<logback.version>1.2.17</logback.version>
 
 		<guava.version>19.0</guava.version>
+		<javax.mail.version>1.4.7</javax.mail.version>
 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
