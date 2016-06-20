@@ -5,9 +5,9 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.github.ashim.web.metric.IMetricService;
@@ -68,8 +68,8 @@ public class RootController {
 		return metricService.getAllMetrics();
 	}
 
-	@RequestMapping(value = "/metrics/{user}", method = RequestMethod.GET)
-	public Metric getMetricByUser(@PathVariable String user) {
+	@RequestMapping(value = "/metrics/single", method = RequestMethod.GET)
+	public Metric getMetricByUser(@RequestParam(value = "user", required = true) String user) {
 		return metricService.getMetric(user);
 	}
 

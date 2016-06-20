@@ -26,7 +26,7 @@ function drawChart() {
 	bar_title.push('');
 	bar_total.push(0);
 
-	$.get("http://localhost:8080/spring-rest-security/root/metrics/ashim", function(jsonData) {
+	$.get("http://localhost:8080/spring-rest-security/root/metrics/single?user=ashim@ekbana.com", function(jsonData) {
 
 		// var jsonData = '{"user":"ashim","apiLogs":[{"request":"GET/users","datas":[{"status":200,"count":5},{"status":400,"count":6},{"status":500,"count":7}]},{"request":"GET/metrics","datas":[{"status":200,"count":7},{"status":400,"count":5},{"status":500,"count":5}]},{"request":"GET/products","datas":[{"status":200,"count":8},{"status":400,"count":5},{"status":500,"count":6}]},{"request":"GET/customers","datas":[{"status":200,"count":3},{"status":400,"count":9},{"status":500,"count":4}]}]}';
 
