@@ -19,6 +19,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationContext;
@@ -77,6 +78,7 @@ public class SpringConfiguration extends WebMvcConfigurerAdapter {
 
 		public MyObjectMapper() {
 			registerModule(new MyModule());
+			setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
 		}
 
 	}
@@ -86,6 +88,21 @@ public class SpringConfiguration extends WebMvcConfigurerAdapter {
 		private static final long serialVersionUID = 8842018254950089167L;
 
 		public MyModule() {
+
+			// addSerializer(Object.class, new
+			// StdSerializer<Object>(Object.class) {
+			// private static final long serialVersionUID =
+			// 4353193990881645654L;
+			//
+			// @Override
+			// public void serialize(Object value, JsonGenerator jgen,
+			// SerializerProvider provider)
+			// throws IOException {
+			//// Object obj = RelationBuilder.build(value).toString();
+			// jgen.writeString( RelationBuilder.build(value).toString());
+			// }
+			// });
+
 			addDeserializer(String.class, new StdScalarDeserializer<String>(String.class) {
 				private static final long serialVersionUID = 9044039001965469284L;
 

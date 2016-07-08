@@ -11,11 +11,10 @@ import com.github.ashim.persistence.common.validation.annotation.ValidEmail;
 
 @Table
 @Entity(name = "product")
-public class Product {
+public class Product extends BaseEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-
 	private Integer id;
 
 	@Column(name = "product_name", unique = true, nullable = false, length = 50)
@@ -58,12 +57,6 @@ public class Product {
 
 	public void setDescription(String description) {
 		this.description = description;
-	}
-
-	@Override
-	public String toString() {
-		return "Product [id=" + id + ", productName=" + productName + ", productCode=" + productCode + ", description="
-				+ description + "]";
 	}
 
 }

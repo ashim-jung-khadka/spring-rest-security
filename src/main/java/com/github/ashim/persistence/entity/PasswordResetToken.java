@@ -14,7 +14,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "password_reset_token")
-public class PasswordResetToken {
+public class PasswordResetToken extends BaseEntity {
 
 	private static final int EXPIRATION = 60 * 24;
 
@@ -136,13 +136,6 @@ public class PasswordResetToken {
 			return false;
 		}
 		return true;
-	}
-
-	@Override
-	public String toString() {
-		final StringBuilder builder = new StringBuilder();
-		builder.append("Token [String=").append(token).append("]").append("[Expires").append(expiryDate).append("]");
-		return builder.toString();
 	}
 
 }

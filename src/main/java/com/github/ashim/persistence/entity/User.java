@@ -20,7 +20,7 @@ import com.github.ashim.persistence.common.enums.UserStatus;
 
 @Entity
 @Table(name = "app_user")
-public class User {
+public class User extends BaseEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -162,13 +162,6 @@ public class User {
 			return false;
 		}
 		return true;
-	}
-
-	@Override
-	public String toString() {
-		return "User [id=" + id + ", userName=" + userName + ", password=" + password + ", firstName=" + firstName
-				+ ", lastName=" + lastName + ", email=" + email + ", status=" + status + ", userProfiles="
-				+ userProfiles + "]";
 	}
 
 }

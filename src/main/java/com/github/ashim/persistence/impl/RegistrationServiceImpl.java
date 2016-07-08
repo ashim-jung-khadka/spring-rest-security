@@ -56,8 +56,11 @@ public class RegistrationServiceImpl implements RegistrationService {
 		userProfiles.addAll(userProfileRepository.findAll());
 		user.setUserProfiles(userProfiles);
 
-		userRepository.save(user);
-
+		try {
+			userRepository.save(user);
+		} catch (Exception ex) {
+			throw ex;
+		}
 		return user;
 	}
 

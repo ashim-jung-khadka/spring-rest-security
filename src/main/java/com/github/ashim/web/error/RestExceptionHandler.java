@@ -58,6 +58,15 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 	@ExceptionHandler({ DataIntegrityViolationException.class })
 	public ResponseEntity<Object> handleBadRequest(final DataIntegrityViolationException ex, final WebRequest request) {
 		final String bodyOfResponse = "This should be DataIntegrityViolationException specific";
+
+		// extract the affected database constraint name:
+		String constraintName = null;
+		if ((ex.getCause() != null) && (ex.getCause() instanceof ConstraintViolationException)) {
+			constraintName = ((ConstraintViolationException) ex.getCause()).getConstraintName();
+		}
+
+		System.out.println("------------" + constraintName);
+
 		return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
 	}
 

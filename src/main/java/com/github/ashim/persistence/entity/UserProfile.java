@@ -11,7 +11,7 @@ import com.github.ashim.persistence.common.enums.UserProfileType;
 
 @Entity
 @Table(name = "user_profile")
-public class UserProfile {
+public class UserProfile extends BaseEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -68,11 +68,6 @@ public class UserProfile {
 			return false;
 		}
 		return true;
-	}
-
-	@Override
-	public String toString() {
-		return "UserProfile [id=" + id + ", profileType=" + profileType + "]";
 	}
 
 }

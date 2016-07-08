@@ -14,7 +14,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "verification_token")
-public class VerificationToken {
+public class VerificationToken extends BaseEntity {
 
 	private static final int EXPIRATION = 60 * 24;
 
@@ -153,13 +153,6 @@ public class VerificationToken {
 			return false;
 		}
 		return true;
-	}
-
-	@Override
-	public String toString() {
-		final StringBuilder builder = new StringBuilder();
-		builder.append("Token [String=").append(token).append("]").append("[Expires").append(expiryDate).append("]");
-		return builder.toString();
 	}
 
 }
