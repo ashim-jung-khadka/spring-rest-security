@@ -1,68 +1,78 @@
-<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
-	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext
-	   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd 
-	   http://www.liquibase.org/xml/ns/dbchangelog 
-	   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
-
-	<!-- 1 -->
-    <changeSet author="ashim" id="tbl_product">
-        <createTable tableName="product">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <!-- 1 -->
+    <changeSet author="ashim" id="TBL_APP_USER">
+        <createTable tableName="app_user">
             <column autoIncrement="true" name="id" type="INT">
-                <constraints primaryKey="true" primaryKeyName="productPK"/>
+                <constraints primaryKey="true" primaryKeyName="PK_APP_USER"/>
             </column>
-            <column name="description" type="VARCHAR(200)"/>
-            <column name="product_code" type="VARCHAR(30)">
+            <column name="user_name" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
-            <column name="product_name" type="VARCHAR(50)">
+            <column name="email" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
+            <column name="first_name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="enabled" type="BOOLEAN"/>
         </createTable>
-        
         <rollback>
-        	<dropTable tableName="product" />
+        	<dropTable tableName="app_user"/>
         </rollback>
     </changeSet>
-
-    <changeSet author="ashim" id="tbl_verification_token">
-        <createTable tableName="verification_token">
-            <column autoIncrement="true" name="id" type="INT">
-                <constraints primaryKey="true" primaryKeyName="PK_VERIFICATION_TOKEN"/>
-            </column>
-            <column name="expiryDate" type="datetime"/>
-            <column name="token" type="VARCHAR(255)"/>
+    
+    <changeSet author="ashim" id="TBL_APP_USER_USER_PROFILE">
+        <createTable tableName="app_user_user_profile">
             <column name="user_id" type="INT">
                 <constraints nullable="false"/>
             </column>
+            <column name="user_profile_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
         </createTable>
-        
         <rollback>
-        	<dropTable tableName="verification_token"/>
+        	<dropTable tableName="app_user_user_profile"/>
         </rollback>
     </changeSet>
     
-    <changeSet author="ashim" id="app_user_column_enabled">
-        <addColumn tableName="app_user">
-            <column name="enabled" type="boolean"/>
-        </addColumn>
-        
+    <changeSet author="ashim" id="TBL_CUSTOMER">
+        <createTable tableName="customer">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints primaryKey="true" primaryKeyName="PK_CUSTOMER"/>
+            </column>
+            <column name="name" type="VARCHAR(255)"/>
+        </createTable>
         <rollback>
-        	<dropColumn tableName="app_user" columnName="enabled" />
+        	<dropTable tableName="customer"/>
         </rollback>
     </changeSet>
     
-    <changeSet author="ashim" id="verification_token_column_is_used">
-        <addColumn tableName="verification_token">
-            <column name="isUsed" type="boolean"/>
-        </addColumn>
-        
+    <changeSet author="ashim" id="TBL_ITEM">
+        <createTable tableName="item">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints primaryKey="true" primaryKeyName="PK_ITEM"/>
+            </column>
+            <column name="item_name" type="VARCHAR(255)"/>
+            <column name="customer_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
         <rollback>
-        	<dropColumn tableName="verification_token" columnName="isUsed" />
+        	<dropTable tableName="item"/>
         </rollback>
     </changeSet>
     
-    <changeSet author="ashim" id="tbl_password_reset_token">
+    <changeSet author="ashim" id="TBL_PASSWORD_RESET_TOKEN">
         <createTable tableName="password_reset_token">
             <column autoIncrement="true" name="id" type="INT">
                 <constraints primaryKey="true" primaryKeyName="PK_PASSWORD_RESET_TOKEN"/>
@@ -73,12 +83,129 @@
                 <constraints nullable="false"/>
             </column>
         </createTable>
-        
         <rollback>
-        	<dropTable tableName="password_reset_token" />
+        	<dropTable tableName="password_reset_token"/>
         </rollback>
     </changeSet>
     
-    <!-- 2 -->
+    <changeSet author="ashim" id="TBL_PRODUCT">
+        <createTable tableName="product">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints primaryKey="true" primaryKeyName="PK_PRODUCT"/>
+            </column>
+            <column name="description" type="VARCHAR(200)"/>
+            <column name="product_code" type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="product_name" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <rollback>
+        	<dropTable tableName="product"/>
+        </rollback>
+    </changeSet>
     
+    <changeSet author="ashim" id="TBL_USER_PROFILE">
+        <createTable tableName="user_profile">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints primaryKey="true" primaryKeyName="PK_USER_PROFILE"/>
+            </column>
+            <column name="profile_type" type="VARCHAR(15)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <rollback>
+        	<dropTable tableName="user_profile"/>
+        </rollback>
+    </changeSet>
+    
+    <changeSet author="ashim" id="TBL_VERIFICATION_TOKEN">
+        <createTable tableName="verification_token">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="PK_VERIFICATION_TOKEN"/>
+            </column>
+            <column name="expiryDate" type="datetime"/>
+            <column name="isUsed" type="BOOLEAN"/>
+            <column name="token" type="VARCHAR(255)"/>
+            <column name="user_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <rollback>
+        	<dropTable tableName="verification_token"/>
+        </rollback>
+    </changeSet>
+    
+    <changeSet author="ashim" id="PK_APP_USER_USER_PROFILE">
+        <addPrimaryKey columnNames="user_id, user_profile_id" tableName="app_user_user_profile"/>
+        <rollback>
+        	<dropPrimaryKey tableName="app_user_user_profile"/>
+        </rollback>
+    </changeSet>
+    
+    <changeSet author="ashim" id="UC_APP_USER_COL_USER_NAME">
+        <addUniqueConstraint columnNames="user_name" constraintName="UC_APP_USER_COL_USER_NAME" tableName="app_user"/>
+        <rollback>
+        	<dropUniqueConstraint tableName="app_user" constraintName="UC_APP_USER_COL_USER_NAME" />
+        </rollback>
+    </changeSet>
+    
+    <changeSet author="ashim" id="UC_PRODUCT_COL_PRODUCT_CODE">
+        <addUniqueConstraint columnNames="product_code" constraintName="UC_PRODUCT_COL_PRODUCT_CODE" tableName="product"/>
+        <rollback>
+        	<dropUniqueConstraint tableName="product" constraintName="UC_PRODUCT_COL_PRODUCT_CODE" />
+        </rollback>
+    </changeSet>
+    
+    <changeSet author="ashim" id="UC_PRODUCT_COL_PRODUCT_NAME">
+        <addUniqueConstraint columnNames="product_name" constraintName="UC_PRODUCT_COL_PRODUCT_NAME" tableName="product"/>
+        <rollback>
+        	<dropUniqueConstraint tableName="product" constraintName="UC_PRODUCT_COL_PRODUCT_NAME" />
+        </rollback>
+    </changeSet>
+    
+    <changeSet author="ashim" id="UC_USER_PROFILE_COL_PROFILE_TYPE">
+        <addUniqueConstraint columnNames="profile_type" constraintName="UC_USER_PROFILE_COL_PROFILE_TYPE" tableName="user_profile"/>
+        <rollback>
+        	<dropUniqueConstraint tableName="user_profile" constraintName="UC_USER_PROFILE_COL_PROFILE_TYPE" />
+        </rollback>
+    </changeSet>
+    
+    <changeSet author="ashim" id="FK_APP_USER_USER_PROFILE_TO_APP_USER">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="app_user_user_profile" constraintName="FK_APP_USER_USER_PROFILE_TO_APP_USER" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="app_user"/>
+        <rollback>
+        	<dropForeignKeyConstraint baseTableName="app_user_user_profile" constraintName="FK_APP_USER_USER_PROFILE_TO_APP_USER"/>
+        </rollback>
+    </changeSet>
+    
+    <changeSet author="ashim" id="FK_APP_USER_USER_PROFILE_TO_USER_PROFILE">
+        <addForeignKeyConstraint baseColumnNames="user_profile_id" baseTableName="app_user_user_profile" constraintName="FK_APP_USER_USER_PROFILE_TO_USER_PROFILE" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="user_profile"/>
+        <rollback>
+        	<dropForeignKeyConstraint baseTableName="app_user_user_profile" constraintName="FK_APP_USER_USER_PROFILE_TO_USER_PROFILE"/>
+        </rollback>
+    </changeSet>
+    
+    <changeSet author="ashim" id="FK_PASSWORD_RESET_TOKEN_TO_APP_USER">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="password_reset_token" constraintName="FK_PASSWORD_RESET_TOKEN_TO_APP_USER" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="app_user"/>
+        <rollback>
+        	<dropForeignKeyConstraint baseTableName="password_reset_token" constraintName="FK_PASSWORD_RESET_TOKEN_TO_APP_USER"/>
+        </rollback>
+    </changeSet>
+    
+    <changeSet author="ashim" id="FK_ITEM_TO_CUSTOMER">
+        <addForeignKeyConstraint baseColumnNames="customer_id" baseTableName="item" constraintName="FK_ITEM_TO_CUSTOMER" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="customer"/>
+        <rollback>
+        	<dropForeignKeyConstraint baseTableName="item" constraintName="FK_ITEM_TO_CUSTOMER"/>
+        </rollback>
+    </changeSet>
+    
+    <changeSet author="ashim" id="FK_VERIFICATION_TOKEN_TO_APP_USER">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="verification_token" constraintName="FK_VERIFICATION_TOKEN_TO_APP_USER" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="app_user"/>
+        <rollback>
+        	<dropForeignKeyConstraint baseTableName="verification_token" constraintName="FK_VERIFICATION_TOKEN_TO_APP_USER"/>
+        </rollback>
+    </changeSet>
+
+	<!-- 2 -->
 </databaseChangeLog>

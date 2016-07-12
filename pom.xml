@@ -28,10 +28,11 @@
 
 				<db.driverClass>com.mysql.jdbc.Driver</db.driverClass>
 				<db.connectionURL>jdbc:mysql://localhost:3306/spring_rest?useSSL=false</db.connectionURL>
-				<db.username>root</db.username>
-				<db.password>root</db.password>
+				<db.username>ashim</db.username>
+				<db.password>ashim</db.password>
 
 				<liquibase.changeLog>master.xml</liquibase.changeLog>
+				<liquibase.change.logFile>src/main/resources/db/migration/${liquibase.changeLog}</liquibase.change.logFile>
 
 				<hibernate.dialect>org.hibernate.dialect.MySQLDialect</hibernate.dialect>
 				<hibernate.show_sql>true</hibernate.show_sql>
@@ -57,10 +58,11 @@
 
 				<db.driverClass>com.mysql.jdbc.Driver</db.driverClass>
 				<db.connectionURL>jdbc:mysql://localhost:3306/test_spring_rest?useSSL=false</db.connectionURL>
-				<db.username>root</db.username>
-				<db.password>root</db.password>
+				<db.username>ashim</db.username>
+				<db.password>ashim</db.password>
 
 				<liquibase.changeLog>test-master.xml</liquibase.changeLog>
+				<liquibase.change.logFile>src/integration-test/resources/db/migration/${liquibase.changeLog}</liquibase.change.logFile>
 
 				<hibernate.dialect>org.hibernate.dialect.MySQLDialect</hibernate.dialect>
 				<hibernate.show_sql>true</hibernate.show_sql>
@@ -199,7 +201,7 @@
 				<artifactId>liquibase-maven-plugin</artifactId>
 				<version>3.4.1</version>
 				<configuration>
-					<changeLogFile>src/main/resources/db/migration/master.xml</changeLogFile>
+					<changeLogFile>${liquibase.change.logFile}</changeLogFile>
 					<diffChangeLogFile>src/main/resources/db/migration/diff-changelog.xml</diffChangeLogFile>
 					<outputChangeLogFile>src/main/resources/db/migration/output-changelog.xml</outputChangeLogFile>
 

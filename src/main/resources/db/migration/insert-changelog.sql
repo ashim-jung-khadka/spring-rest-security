@@ -1,26 +1,9 @@
---liquibase formatted sql
+-- liquibase formatted sql
 
 -- -----------------------------------------------------
 -- Table app_user
 -- -----------------------------------------------------
--- changeset ashim:tbl_app_user
-	CREATE TABLE app_user (
-		id int(11) NOT NULL AUTO_INCREMENT,
-		user_name varchar(30) NOT NULL,
-		password varchar(100) NOT NULL,
-		first_name varchar(30) NOT NULL,
-		last_name varchar(30) NOT NULL,
-		email varchar(30) NOT NULL,
-		status varchar(30) NOT NULL,
-		PRIMARY KEY (id),
-		UNIQUE KEY user_name (user_name)
-	);
--- rollback drop table app_user;
-
--- -----------------------------------------------------
--- Table app_user
--- -----------------------------------------------------
--- changeset ashim:ins_app_user
+-- changeset ashim:INS_APP_USER
 	INSERT INTO app_user(user_name, password, first_name, last_name, email, status)
 	VALUES ('ashim','$2a$10$0rrM2oy2RMKoJ4T5PpaZruCfN3sBab8sS6TEKbwXRawE0ml.DJ.CS', 'Ashim','Khadka','ashim@gmail.com', 'active');
 	
@@ -40,19 +23,7 @@
 -- -----------------------------------------------------
 -- Table user_profile
 -- -----------------------------------------------------
--- changeset ashim:tbl_user_profile
-	CREATE TABLE user_profile (
-		id int(11) NOT NULL AUTO_INCREMENT,
-		profile_type varchar(30) NOT NULL,
-		PRIMARY KEY (id),
-		UNIQUE KEY profile_type (profile_type)
-	);
--- rollback drop table user_profile;
-
--- -----------------------------------------------------
--- Table user_profile
--- -----------------------------------------------------
--- changeset ashim:ins_user_profile
+-- changeset ashim:INS_USER_PROFILE
 	INSERT INTO user_profile(profile_type)
 	VALUES ('ADMIN');
 	
@@ -63,19 +34,7 @@
 -- -----------------------------------------------------
 -- Table app_user_user_profile
 -- -----------------------------------------------------
--- changeset ashim:tbl_app_user_user_profile
-	CREATE TABLE app_user_user_profile (
-		user_id int(11) NOT NULL,
-		user_profile_id int(11) NOT NULL,
-		PRIMARY KEY (user_id,user_profile_id),
-		KEY FK_USER_PROFILE_ID (user_profile_id)
-	);
--- rollback DROP TABLE app_user_user_profile;
-
--- -----------------------------------------------------
--- Table app_user_user_profile
--- -----------------------------------------------------
--- changeset ashim:ins_app_user_user_profile
+-- changeset ashim:INS_APP_USER_USER_PROFILE
 	INSERT INTO app_user_user_profile (user_id, user_profile_id)
 	SELECT user.id, profile.id FROM app_user user, user_profile profile
 		WHERE user.user_name='ashim' AND profile.profile_type='ADMIN';
@@ -98,15 +57,12 @@
 -- rollback TRUNCATE TABLE app_user_user_profile;
 
 -- -----------------------------------------------------
--- Table app_user_user_profile
+-- Table product
 -- -----------------------------------------------------
--- changeset ashim:app_user_user_profile_foreign_user_id
-	ALTER TABLE app_user_user_profile ADD CONSTRAINT FK_APP_USER FOREIGN KEY (user_id) REFERENCES app_user (id);
--- rollback ALTER TABLE app_user_user_profile DROP FOREIGN KEY FK_APP_USER;
-
--- -----------------------------------------------------
--- Table app_user_user_profile
--- -----------------------------------------------------
--- changeset ashim:app_user_user_profile_foreign_user_profile_id
-	ALTER TABLE app_user_user_profile ADD CONSTRAINT FK_USER_PROFILE FOREIGN KEY (user_profile_id) REFERENCES user_profile (id);
--- rollback ALTER TABLE app_user_user_profile DROP FOREIGN KEY FK_USER_PROFILE;
+-- changeset ashim:INS_PRODUCT
+	INSERT INTO product(id, product_name, product_code, description)
+	VALUES (1, "almost me", "AM-123", "almost me");
+	
+	INSERT INTO product(id, product_name, product_code, description)
+	VALUES (2, "float pool", "FP-123", "float pool");
+-- rollback TRUNCATE TABLE product;
